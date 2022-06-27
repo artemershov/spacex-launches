@@ -1,0 +1,86 @@
+.header {
+    text-align: center;
+    margin: 50px auto;
+}
+
+.list {
+    list-style: none;
+    padding: 0 0 50px;
+    border-left: 4px dotted palevioletred;
+}
+
+.item {
+    display: block;
+    position: relative;
+    margin-bottom: 50px;
+    padding: 0 50px;
+}
+
+.itemBody {
+    display: block;
+    transition: transform 0.2s;
+}
+
+.itemBody:hover {
+    transform: scale(1.02) translate(1%, 1%);
+}
+
+.pin {
+    position: absolute;
+    top: 5px;
+    left: -27px;
+    transition: transform 0.2s;
+}
+
+.pin:hover {
+    transform: scale(1.2);
+}
+
+@media screen and (min-width: 1280px) {
+    .list {
+        margin-left: 50%;
+    }
+
+    .item:nth-child(even) {
+        text-align: right;
+        transform: translateX(-100%);
+    }
+
+    .item:nth-child(even) .itemBody:hover {
+        transform: scale(1.02) translate(-1%, 1%);
+    }
+
+    .item:nth-child(even) .pin {
+        left: auto;
+        right: -23px;
+    }
+}
+
+.date {
+    margin: 0;
+}
+
+.mission {
+    color: coral;
+    font-weight: bold;
+}
+
+.image {
+    margin: 30px 0;
+}
+
+.loadMore {
+    display: block;
+    border: none;
+    background: palevioletred;
+    color: white;
+    padding: 10px 15px;
+    margin: 0 auto 30px;
+    font-weight: bold;
+    font-size: 80%;
+    transition: transform 0.2s;
+}
+
+.loadMore:hover {
+    transform: scale(1.05);
+}

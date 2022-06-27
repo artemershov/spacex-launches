@@ -1,0 +1,58 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useQuery, NetworkStatus } from '@apollo/client';
+import {
+    LaunchesQueryData,
+    LaunchesQueryVars,
+    LAUNCHES_QUERY,
+} from '../graphql/launchesQuery';
+import {
+    launchesSelector,
+    addLaunches,
+    setLaunches,
+    setLaunchesQueryOffset,
+} from '../redux/launchesSlice';
+
+export const launchesQueryVars: LaunchesQueryVars = {
+    limit: 10,
+    offset: 0,
+    sort: 'launch_date_utc',
+    order: 'desc',
+};
+
+export const useLaunchesQuery = () => {
+    const dispatch = useDispatch();
+    const { launches, launchesQueryOffset } = useSelector(launchesSelector);
+
+    const { loading, data, fetchMore, networkStatus } = useQuery<
+        LaunchesQueryData,
+        LaunchesQueryVars
+    >(LAUNCHES_QUERY, {
+        variables: launchesQueryVars,
+        notifyOnNetworkStatusChange: true,
+    });
+
+    const isLoadingMore = networkStatus === NetworkStatus.fetchMore;
+
+    useEffect(() => {
+        if (data?.launchesPast) {
+            dispatch(setLaunches(data?.launchesPast));
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleLoadMore = async () => {
+        const offset =
+            launchesQueryOffset + (launchesQueryVars.limit as number);
+        const result = await fetchMore({ variables: { offset } });
+        dispatch(setLaunchesQueryOffset(offset));
+        dispatch(addLaunches(result.data.launchesPast));
+    };
+
+    return {
+        launches,
+        isLoading: loading,
+        isLoadingMore,
+        handleLoadMore,
+    };
+};
