@@ -25,10 +25,10 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
     const appProps = await App.getInitialProps(appContext);
 
     const favoritesResponse = await fetch(
-        'http://www.randomnumberapi.com/api/v1.0/random?min=90&max=110&count=10'
+        'https://www.random.org/integers/?num=10&min=90&max=110&col=1&base=10&format=plain&rnd=new'
     );
-    const favoritesArray = await favoritesResponse.json();
-    const favoritesIDs = favoritesArray.map(String);
+    const favoritesString = await favoritesResponse.text();
+    const favoritesIDs = favoritesString.split('\n');
 
     redux.dispatch(setFavorites(favoritesIDs));
 
