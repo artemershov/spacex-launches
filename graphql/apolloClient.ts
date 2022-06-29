@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { concatPagination } from '@apollo/client/utilities';
 import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
 import type { AppProps } from 'next/app';
@@ -15,15 +14,7 @@ const createApolloClient = () =>
     new ApolloClient({
         uri: 'https://api.spacex.land/graphql/',
         ssrMode: typeof window === 'undefined',
-        cache: new InMemoryCache({
-            typePolicies: {
-                Query: {
-                    fields: {
-                        launchesPast: concatPagination(),
-                    },
-                },
-            },
-        }),
+        cache: new InMemoryCache(),
     });
 
 export const initializeApollo = (initialState = null) => {
@@ -68,6 +59,5 @@ export function addApolloState(
 
 export function useApollo(pageProps: AppProps['pageProps']) {
     const state = pageProps[APOLLO_STATE_PROP_NAME];
-    const store = useMemo(() => initializeApollo(state), [state]);
-    return store;
+    return useMemo(() => initializeApollo(state), [state]);
 }

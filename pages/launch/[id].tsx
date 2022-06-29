@@ -32,10 +32,12 @@ const LaunchPage: NextPage<LaunchPageProps> = ({ launch }) => {
         return <Loading />;
     }
 
-    const { id } = router.query;
+    const { id } = router.query as LaunchPageParams;
+
+    const imageLoader = flickrImageLoader('_c');
 
     return (
-        <Layout>
+        <Layout title={launch.mission_name}>
             <div className={styles.header}>
                 <div>
                     <h1 className={styles.title}>
@@ -47,7 +49,7 @@ const LaunchPage: NextPage<LaunchPageProps> = ({ launch }) => {
                     </div>
                 </div>
                 <div className={styles.like}>
-                    <LikeButton id={id as string} />
+                    <LikeButton id={id} />
                 </div>
             </div>
 
@@ -74,7 +76,7 @@ const LaunchPage: NextPage<LaunchPageProps> = ({ launch }) => {
                         {launch.links.flickr_images.map((src) => (
                             <Image
                                 key={src}
-                                loader={flickrImageLoader('_c')}
+                                loader={imageLoader}
                                 src={src}
                                 alt={launch.rocket.rocket_name}
                                 layout="responsive"
@@ -104,12 +106,10 @@ const LaunchPage: NextPage<LaunchPageProps> = ({ launch }) => {
     );
 };
 
-export const getStaticPaths = () => {
-    return {
-        paths: [],
-        fallback: true,
-    };
-};
+export const getStaticPaths = () => ({
+    paths: [],
+    fallback: true,
+});
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { id } = params as LaunchPageParams;

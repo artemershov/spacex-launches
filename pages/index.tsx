@@ -26,6 +26,8 @@ const LaunchesHistoryPage: NextPage = () => {
         return <Loading />;
     }
 
+    const imageLoader = flickrImageLoader('_c');
+
     return (
         <Layout>
             <h1 className={styles.header}>SpaceX 🚀 Launches history</h1>
@@ -33,7 +35,7 @@ const LaunchesHistoryPage: NextPage = () => {
             <ul className={styles.list}>
                 {launches.map((item) => (
                     <li key={item.id} className={styles.item}>
-                        <div className={styles.pin}>
+                        <div className={styles.like}>
                             <LikeButton id={item.id} />
                         </div>
                         <Link href={`/launch/${item.id}`}>
@@ -47,7 +49,7 @@ const LaunchesHistoryPage: NextPage = () => {
                                 {item.links.flickr_images.length > 0 && (
                                     <div className={styles.image}>
                                         <Image
-                                            loader={flickrImageLoader()}
+                                            loader={imageLoader}
                                             src={item.links.flickr_images[0]}
                                             alt={item.mission_name}
                                             layout="responsive"
@@ -60,7 +62,7 @@ const LaunchesHistoryPage: NextPage = () => {
                             </a>
                         </Link>
                         <div className={styles.remove}>
-                            <RemoveButton id={item.id}/>
+                            <RemoveButton id={item.id} />
                         </div>
                     </li>
                 ))}

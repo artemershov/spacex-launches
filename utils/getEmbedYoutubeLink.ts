@@ -10,8 +10,8 @@ export const getEmbedYoutubeLink = (url: string) => {
     }
 
     if (url.includes('watch')) {
-        videoId = (new URL(url)).searchParams.get('v') as string;
+        videoId = new URL(url).searchParams.get('v') as string;
     }
 
     return `https://www.youtube.com/embed/${videoId}`;
-}
+};

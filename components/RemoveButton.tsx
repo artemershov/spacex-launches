@@ -1,30 +1,25 @@
 import { useDispatch } from 'react-redux';
 import { removeLaunch } from '../redux/launchesSlice';
+import { AppDispatch } from '../redux/store';
 
 interface RemoveButtonProps {
     id: string;
 }
 
 export const RemoveButton = ({ id }: RemoveButtonProps) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
-    const handleClick = () => {
-        dispatch(removeLaunch(id));
-    };
+    const handleClick = () => dispatch(removeLaunch(id));
 
     return (
         <>
-            <button
-                className={'remove'}
-                onClick={handleClick}
-            >
+            <button className={'remove'} onClick={handleClick}>
                 ❌ Remove from list
             </button>
 
             <style jsx>{`
                 .remove {
                     display: inline;
-                    border-radius: 100%;
                     background: none;
                     border: none;
                     color: white;

@@ -27,8 +27,8 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
     const favoritesResponse = await fetch(
         'https://www.random.org/integers/?num=10&min=90&max=110&col=1&base=10&format=plain&rnd=new'
     );
-    const favoritesString = await favoritesResponse.text();
-    const favoritesIDs = favoritesString.split('\n');
+    const favoritesText = await favoritesResponse.text();
+    const favoritesIDs = favoritesText.split('\n');
 
     redux.dispatch(setFavorites(favoritesIDs));
 

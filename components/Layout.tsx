@@ -1,14 +1,17 @@
 import Head from 'next/head';
 
 export interface LayoutProps {
+    title?: string;
     children: React.ReactNode | React.ReactNode[];
 }
 
-export const Layout = ({ children }: LayoutProps) => {
+const SITE_TITLE = 'SpaceX Launches';
+
+export const Layout = ({ children, title }: LayoutProps) => {
     return (
         <main className="container">
             <Head>
-                <title>SpaceX Launches</title>
+                <title>{title ? `${title} | ${SITE_TITLE}` : SITE_TITLE}</title>
             </Head>
 
             {children}

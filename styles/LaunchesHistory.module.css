@@ -25,14 +25,14 @@
     transform: scale(1.02) translate(1%, 1%);
 }
 
-.pin {
+.like {
     position: absolute;
     top: 5px;
     left: -27px;
     transition: transform 0.2s;
 }
 
-.pin:hover {
+.like:hover {
     transform: scale(1.2);
 }
 
@@ -50,7 +50,7 @@
         transform: scale(1.02) translate(-1%, 1%);
     }
 
-    .item:nth-child(even) .pin {
+    .item:nth-child(even) .like {
         left: auto;
         right: -23px;
     }

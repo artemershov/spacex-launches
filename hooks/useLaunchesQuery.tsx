@@ -12,6 +12,7 @@ import {
     setLaunches,
     setLaunchesQueryOffset,
 } from '../redux/launchesSlice';
+import { AppDispatch } from '../redux/store';
 
 export const launchesQueryVars: LaunchesQueryVars = {
     limit: 10,
@@ -21,7 +22,7 @@ export const launchesQueryVars: LaunchesQueryVars = {
 };
 
 export const useLaunchesQuery = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const { launches, launchesQueryOffset } = useSelector(launchesSelector);
 
     const { loading, data, fetchMore, networkStatus } = useQuery<
@@ -32,13 +33,11 @@ export const useLaunchesQuery = () => {
         notifyOnNetworkStatusChange: true,
     });
 
-    const isLoadingMore = networkStatus === NetworkStatus.fetchMore;
-
     useEffect(() => {
         if (data?.launchesPast) {
-            dispatch(setLaunches(data?.launchesPast));
+            dispatch(setLaunches(data.launchesPast));
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleLoadMore = async () => {
@@ -52,7 +51,7 @@ export const useLaunchesQuery = () => {
     return {
         launches,
         isLoading: loading,
-        isLoadingMore,
+        isLoadingMore: networkStatus === NetworkStatus.fetchMore,
         handleLoadMore,
     };
 };

@@ -1,19 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { like, unlike, launchesSelector } from '../redux/launchesSlice';
+import { AppDispatch } from '../redux/store';
 
 interface LikeButtonProps {
     id: string;
 }
 
 export const LikeButton = ({ id }: LikeButtonProps) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const { favoritesIDs } = useSelector(launchesSelector);
 
     const isInFavorites = favoritesIDs.includes(id);
 
-    const handleClick = () => {
-        isInFavorites ? dispatch(unlike(id)) : dispatch(like(id));
-    };
+    const handleClick = () => dispatch(isInFavorites ? unlike(id) : like(id));
 
     return (
         <>
