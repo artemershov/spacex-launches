@@ -28,10 +28,12 @@ export const LikeButton = ({ id }: LikeButtonProps) => {
                     display: block;
                     width: 50px;
                     height: 50px;
+                    padding: 0;
                     border-radius: 100%;
                     background: black;
                     border: 5px solid palevioletred;
                     font-size: 24px;
+                    line-height: 1;
                     transition: all 0.2s;
                 }
 
