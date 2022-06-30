@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery, NetworkStatus } from '@apollo/client';
 import {
@@ -25,20 +24,13 @@ export const useLaunchesQuery = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { launches, launchesQueryOffset } = useSelector(launchesSelector);
 
-    const { loading, data, fetchMore, networkStatus } = useQuery<
+    const { loading, fetchMore, networkStatus } = useQuery<
         LaunchesQueryData,
         LaunchesQueryVars
     >(LAUNCHES_QUERY, {
         variables: launchesQueryVars,
         notifyOnNetworkStatusChange: true,
     });
-
-    useEffect(() => {
-        if (data?.launchesPast) {
-            dispatch(setLaunches(data.launchesPast));
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const handleLoadMore = async () => {
         const offset =
