@@ -12,7 +12,7 @@ let apolloClient: ApolloClientType;
 
 const createApolloClient = () =>
     new ApolloClient({
-        uri: 'https://api.spacex.land/graphql/',
+        uri: process.env.NEXT_PUBLIC_SPACEX_GRAPHQL_API_URL,
         ssrMode: typeof window === 'undefined',
         cache: new InMemoryCache(),
     });
